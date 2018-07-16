@@ -82,12 +82,12 @@ install_mariadb() {
 
 install_dependencies() {
     output "Installing PHP and Dependencies."
-    sudo aptitude -y install php7.0 php7.0-cli php7.0-gd php7.0-mysql php7.0-common php7.0-mbstring php7.0-tokenizer php7.0-bcmath php7.0-xml php7.0-fpm php7.0-curl
+    sudo aptitude -y install php7.2 php7.2-cli php7.2-gd php7.2-mysql php7.2-common php7.2-mbstring php7.2-tokenizer php7.2-bcmath php7.2-xml php7.2-fpm php7.2-curl
 }
 
 install_dependencies_apache() {
     output "Installing PHP and Dependencies."
-    sudo aptitude -y install php7.0 php7.0-cli php7.0-gd php7.0-mysql php7.0-common php7.0-mbstring php7.0-tokenizer php7.0-bcmath php7.0-xml php7.0-fpm php7.0-curl libapache2-mod-php
+    sudo aptitude -y install php7.2 php7.2-cli php7.2-gd php7.2-mysql php7.2-common php7.2-mbstring php7.2-tokenizer php7.2-bcmath php7.2-xml php7.2-fpm php7.2-curl libapache2-mod-php
 }
 
 install_timezone() {
@@ -124,8 +124,8 @@ pterodactyl() {
     output "Install Pterodactyl-Panel."
     # Installing the Panel
     cd /var/www/pterodactyl/html
-    curl -Lo v0.5.7.tar.gz https://github.com/Pterodactyl/Panel/archive/v0.5.7.tar.gz
-    tar --strip-components=1 -xzvf v0.5.7.tar.gz
+    curl -Lo v0.7.9.tar.gz https://github.com/pterodactyl/panel/releases/download/v0.7.9/panel.tar.gz
+    tar --strip-components=1 -xzvf v0.7.9.tar.gz
     sudo chmod -R 777 storage/* bootstrap/cache
     curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
     composer setup
@@ -206,7 +206,7 @@ echo '
     
         location ~ \.php$ {
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
             fastcgi_index index.php;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -282,7 +282,7 @@ echo '
         
             location ~ \.php$ {
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
                 fastcgi_index index.php;
                 include fastcgi_params;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -368,8 +368,8 @@ pterodactyl_daemon() {
     sudo mkdir -p /srv/daemon /srv/daemon-data
     sudo chown -R $whoami:$whoami /srv/daemon
     cd /srv/daemon
-    curl -Lo v0.3.7.tar.gz https://github.com/Pterodactyl/Daemon/archive/v0.3.7.tar.gz
-    tar --strip-components=1 -xzvf v0.3.7.tar.gz
+    curl -Lo v0.5.6.tar.gz https://github.com/pterodactyl/daemon/releases/download/v0.5.6/daemon.tar.gz
+    tar --strip-components=1 -xzvf v0.5.6.tar.gz
     npm install --only=production
 
     output "This step requires you to create your first node through your panel, only continue after you get your core code"
